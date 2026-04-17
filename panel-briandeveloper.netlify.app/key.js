@@ -113,10 +113,15 @@ async function verifyKey(key) {
   const res = await fetch(API_URL + "/api/verify", {
     method: "POST",
     headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({ key })
+    body: JSON.stringify({
+      key,
+      deviceId: getDeviceId()
+    })
   });
   return res.json();
 }
+
+
 
 async function activateKey(key, deviceId) {
   const res = await fetch(API_URL + "/api/activate", {
@@ -132,6 +137,22 @@ function unlock() {
   document.getElementById("lockScreen")?.remove();
   document.body.style.overflow = "auto";
 }
+function logout(reason = "KEY_INVALID") {
+  localStorage.removeItem("vip_key");
+
+  // hiện lại lock screen
+  if (!document.getElementById("lockScreen")) {
+    document.body.appendChild(overlay);
+  }
+
+  document.body.style.overflow = "hidden";
+
+  const msg = document.getElementById("msg");
+  if (msg) {
+    msg.innerText = "🔒 Đã đăng xuất: " + reason;
+  }
+}
+
 
 // ===== LOGIN FLOW =====
 document.getElementById("submitKey").onclick = async () => {
@@ -166,17 +187,30 @@ document.getElementById("submitKey").onclick = async () => {
   if (!key) return;
 
   const v = await verifyKey(key);
-  if (!v.ok) return;
+  if (!v.ok) {
+   logout(v.error);
+   return;
+  }
+
 
   unlock();
 
   // ===== ANTI BYPASS (check mỗi 5s) =====
-  setInterval(async () => {
-    const res = await verifyKey(key);
-    if (!res.ok) {
-      location.reload();
+setInterval(async () => {
+  const key = localStorage.getItem("vip_key");
+  if (!key) return;
+
+  const res = await verifyKey(key);
+
+  if (!res.ok) {
+    if (["REVOKED","EXPIRED","DEVICE_NOT_BOUND"].includes(res.error)) {
+      logout(res.error);
     }
-  }, 5000);
+  }
+
+}, 5000);
+
+
 })();
 
 // ===== BASIC ANTI DEVTOOLS =====
