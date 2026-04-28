@@ -584,8 +584,8 @@ function toggleGroup() {
 </script>
 <div id="lockScreen">
   <div class="lock-box">
-    <h1>🔒 Panel đã bị khóa</h1>
-    <p>Panel đã bị khóa bởi admin và không cho phép sử dụng</p>
+    <h1>⚠️ WARNING</h1>
+    <p>Panel đã bị admin khóa và không cho phép sử dụng</p>
   </div>
 </div>
 
@@ -662,6 +662,22 @@ function toggleGroup() {
   window.openFreeFireMax = function() { return false; };
 
 })();
+</script>
+<script>
+window.onload = function () {
+  const lock = document.getElementById("lockScreen");
+  if (lock) {
+    lock.style.display = "flex";
+  }
+};
+</script>
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const lock = document.getElementById("lockScreen");
+  if (lock) {
+    document.body.innerHTML = lock.outerHTML;
+  }
+});
 </script>
 </body>
 
