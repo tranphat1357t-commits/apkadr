@@ -582,6 +582,53 @@ function toggleGroup() {
   }
 }
 </script>
+<div id="lockScreen">
+  <div class="lock-box">
+    <h1>🔒 Panel đã bị khóa</h1>
+    <p>Panel đã bị khóa bởi admin và không cho phép sử dụng</p>
+  </div>
+</div>
+
+<style>
+#lockScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 999999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lock-box {
+  text-align: center;
+  color: #fff;
+  font-family: sans-serif;
+}
+
+.lock-box h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.lock-box p {
+  font-size: 16px;
+  opacity: 0.8;
+}
+</style>
+
+<script>
+// chặn toàn bộ tương tác
+document.addEventListener("click", e => e.stopPropagation(), true);
+document.addEventListener("keydown", e => e.preventDefault(), true);
+document.addEventListener("touchstart", e => e.preventDefault(), { passive:false });
+
+// khóa scroll
+document.body.style.overflow = "hidden";
+</script>
 </body>
 
 <!-- Mirrored from panel-ngocthinhcoder.netlify.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Apr 2026 15:30:58 GMT -->
