@@ -582,64 +582,6 @@ function toggleGroup() {
   }
 }
 </script>
-<!-- 🔒 LOCK PANEL -->
-<div id="lockScreen">
-  <div class="lock-box">
-    <h1>🔒 Panel đã bị khóa</h1>
-    <p>Vui lòng quay lại sau!</p>
-  </div>
-</div>
-
-<style>
-#lockScreen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  z-index: 999999999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Ẩn toàn bộ web phía sau */
-body > *:not(#lockScreen) {
-  display: none !important;
-}
-
-.lock-box {
-  text-align: center;
-  color: #fff;
-  font-family: sans-serif;
-}
-
-.lock-box h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-</style>
-
-<script>
-// 🔥 chặn toàn bộ tương tác
-["click","mousedown","mouseup","keydown","keyup","touchstart"].forEach(e=>{
-  document.addEventListener(e, ev=>{
-    ev.stopPropagation();
-    ev.preventDefault();
-  }, true);
-});
-
-// 🔥 chặn script khác mở lại UI
-setInterval(()=>{
-  document.querySelectorAll("body > *:not(#lockScreen)").forEach(el=>{
-    el.style.display = "none";
-  });
-}, 500);
-
-// 🔥 khóa scroll
-document.body.style.overflow = "hidden";
-</script>
 </body>
 
 <!-- Mirrored from panel-ngocthinhcoder.netlify.app/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Apr 2026 15:30:58 GMT -->
