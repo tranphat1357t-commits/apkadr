@@ -598,25 +598,49 @@ function toggleGroup() {
   height: 100%;
   background: #000;
   z-index: 9999999999;
+
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
 .lock-box {
+  width: 100%;
+  max-width: 320px;
   text-align: center;
   color: #fff;
   font-family: sans-serif;
+
+  background: rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 25px 15px;
+  box-shadow: 0 0 20px rgba(0,255,255,0.2);
 }
 
 .lock-box h1 {
-  font-size: 30px;
+  font-size: 22px;
   margin-bottom: 10px;
+  color: #ff4d4f;
 }
 
 .lock-box p {
-  font-size: 16px;
-  opacity: 0.8;
+  font-size: 14px;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+@media (max-width: 400px) {
+  .lock-box {
+    padding: 20px 12px;
+  }
+
+  .lock-box h1 {
+    font-size: 20px;
+  }
+
+  .lock-box p {
+    font-size: 13px;
+  }
 }
 </style>
 <script>
