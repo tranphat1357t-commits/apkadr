@@ -597,7 +597,7 @@ function toggleGroup() {
   width: 100%;
   height: 100%;
   background: #000;
-  z-index: 999999999;
+  z-index: 9999999999;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -610,7 +610,7 @@ function toggleGroup() {
 }
 
 .lock-box h1 {
-  font-size: 28px;
+  font-size: 30px;
   margin-bottom: 10px;
 }
 
@@ -619,15 +619,49 @@ function toggleGroup() {
   opacity: 0.8;
 }
 </style>
-
 <script>
-// chặn toàn bộ tương tác
-document.addEventListener("click", e => e.stopPropagation(), true);
-document.addEventListener("keydown", e => e.preventDefault(), true);
-document.addEventListener("touchstart", e => e.preventDefault(), { passive:false });
+// chạy ngay lập tức (ưu tiên cao)
+(function () {
 
-// khóa scroll
-document.body.style.overflow = "hidden";
+  // chặn toàn bộ sự kiện
+  const block = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  };
+
+  [
+    "click",
+    "dblclick",
+    "mousedown",
+    "mouseup",
+    "mousemove",
+    "touchstart",
+    "touchmove",
+    "touchend",
+    "keydown",
+    "keyup",
+    "keypress",
+    "contextmenu",
+    "wheel"
+  ].forEach(event => {
+    document.addEventListener(event, block, { passive: false, capture: true });
+  });
+
+  // khóa scroll
+  document.body.style.overflow = "hidden";
+
+  // vô hiệu toàn bộ input + button
+  document.querySelectorAll("button, input, select, textarea").forEach(el => {
+    el.disabled = true;
+  });
+
+  // chặn function panel nếu có gọi
+  window.enterPanel = function() { return false; };
+  window.openFreeFire = function() { return false; };
+  window.openFreeFireMax = function() { return false; };
+
+})();
 </script>
 </body>
 
